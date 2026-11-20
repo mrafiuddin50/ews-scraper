@@ -1,0 +1,39 @@
+<!-- Trimmed excerpt of https://ews.tropmet.res.in/index.php captured 20 Nov 2026 (RTSA cut to two days). -->
+<html><head><style>
+.ews-top > .ews-card.ews-outlook-card,
+.ews-top > .ews-card:hover { min-width: 0; }
+</style></head><body>
+	<div class="ews-card ews-aqi-card"><div class="ews-ts">20 Nov 2026, 10:00 IST</div></div>
+	<div class="ews-card ews-outlook-card">
+		<div class="ews-card-h">
+			<div class="grow">
+				<h2>Source apportionment of PM<sub>2.5</sub> <button type="button" class="ews-info ews-pie-info" id="ewsPieInfoBtn" title="Explain pie-chart colours">i</button></h2>
+				<div class="ews-ts">Wed, 11 Nov</div>			</div>
+		</div>
+		<div class="ews-sa-panel" id="ewsSaRt" role="tabpanel" aria-labelledby="ewsSaTabRt">
+					<div class="ews-rt-dates" id="ewsRtDates" role="tablist" aria-label="Real-time dates">
+								<button type="button" role="tab" class="ews-rt-date" data-i="0" aria-selected="false"><small>Sat</small>14 Nov</button>
+								<button type="button" role="tab" class="ews-rt-date on" data-i="1" aria-selected="true"><small>Thu</small>19 Nov*</button>
+							</div>
+			<p class="ews-rt-note">* Only from 1 AM to 9 AM</p>
+		</div>
+	</div>
+<script>
+/* Source-contribution pie (first day only; data from DSSmean_array.php, same as the DSS bar chart) */
+(function () {
+  var el = document.getElementById('ewsSrcPie');
+  if (!el || typeof Highcharts === 'undefined') return;
+  var items = [{"name":"Delhi Transport","color":"#e9b221","y":20.17,"local":true},{"name":"Jhajjar","color":"#0071bd","y":13.17,"local":false},{"name":"Others","color":"#bddfe4","y":9.61,"local":false},{"name":"Stubble Burning","color":"#a31430","y":9.19,"local":false},{"name":"Gurgaon","color":"#9be979","y":6.57,"local":false},{"name":"Delhi Residential","color":"#088996","y":5.07,"local":true},{"name":"Delhi & peripheral Industries","color":"#e05a74","y":3.96,"local":true},{"name":"Sonipat","color":"#e78598","y":3.11,"local":false},{"name":"Delhi Construction","color":"#9ae3ae","y":2.78,"local":true},{"name":"Rohtak","color":"#4d2e28","y":2.2,"local":false},{"name":"Muzaffarnagar","color":"#f5d98f","y":2.17,"local":false},{"name":"Ghaziabad","color":"#ad2e63","y":2.14,"local":false},{"name":"Bhiwani","color":"#d8ab94","y":2.04,"local":false},{"name":"Gautam Buddha Nagar","color":"#07950f","y":1.84,"local":false},{"name":"Delhi Waste burning","color":"#c7c50c","y":1.79,"local":true},{"name":"Panipat","color":"#7798ab","y":1.74,"local":false},{"name":"Delhi Energy","color":"#5833FF","y":1.68,"local":true},{"name":"Bagpat","color":"#ffa282","y":1.66,"local":false},{"name":"Delhi Road Dust","color":"#FF5833","y":1.49,"local":true},{"name":"Delhi Other Sectors","color":"#8F63B6","y":1.37,"local":true},{"name":"Faridabad","color":"#c7b6fc","y":1.26,"local":false},{"name":"Meerut","color":"#c109e5","y":1.16,"local":false},{"name":"Mahendergarh","color":"#812f8b","y":0.96,"local":false},{"name":"Bulandshahr","color":"#4ebeee","y":0.82,"local":false},{"name":"Rewari","color":"#fe2600","y":0.71,"local":false},{"name":"Karnal","color":"#ffff00","y":0.53,"local":false},{"name":"Jind","color":"#6f7922","y":0.39,"local":false},{"name":"Alwar","color":"#cca768","y":0.29,"local":false},{"name":"Bharatpur","color":"#8c8b87","y":0.14,"local":false}];
+  if (!items.length) return;
+})();
+</script>
+<script>
+/* Source apportionment tabs: DSS - DELHI-NCR (default) / RTSA - Delhi (Excel, one tab per date) */
+(function () {
+  var card = document.querySelector('.ews-outlook-card');
+  if (!card) return;
+  var rtData = [{"key":"2026-11-14","tab":"14 Nov","dow":"Sat","label":"Sat, 14 Nov 2026","total":152.3,"items":[{"name":"Secondary Organic","color":"#4ebeee","y":34.53,"sd":3.59},{"name":"Biomass burning (Stubble burning, Domestic solid biofuel\/dunk-cake\/wood)","color":"#812f8b","y":28.4,"sd":13.41},{"name":"Vehicles","color":"#e9b221","y":13.96,"sd":8.57},{"name":"Secondary Inorganic","color":"#1d6fd6","y":11.23,"sd":2.37},{"name":"Mix Combustion","color":"#8f63b6","y":5.19,"sd":1.88},{"name":"Mineral dust\/ash","color":"#07950f","y":3.47,"sd":1.37},{"name":"Firecrackers","color":"#088996","y":1.55,"sd":1.08},{"name":"Waste Burning (Municipal\/plastic-rubber containing waste)","color":"#5833ff","y":0.88,"sd":0.76},{"name":"Industrial","color":"#e05a74","y":0.79,"sd":0.32}],"sub":[{"name":"Sulphate","y":3.3,"sd":0.44},{"name":"Nitrate","y":4.13,"sd":1.03},{"name":"Ammonia","y":3.8,"sd":0.96}]},{"key":"2026-11-19","tab":"19 Nov","dow":"Thu","label":"Thu, 19 Nov 2026","total":160.2,"items":[{"name":"Biomass burning (Stubble burning, Domestic solid biofuel\/dunk-cake\/wood)","color":"#07950f","y":33.31,"sd":9.1},{"name":"Waste Burning (Municipal\/plastic-rubber containing waste)","color":"#5833ff","y":19.73,"sd":4.79},{"name":"Vehicles","color":"#e9b221","y":17.96,"sd":5.83},{"name":"Secondary Organic","color":"#4ebeee","y":14.12,"sd":5.49},{"name":"Secondary Inorganic","color":"#1d6fd6","y":9.48,"sd":1.34},{"name":"Coal Combustion","color":"#4d4d4d","y":1.77,"sd":0.91},{"name":"Industrial","color":"#e05a74","y":1.52,"sd":1.51},{"name":"Firecrackers","color":"#8f63b6","y":1.45,"sd":1.27},{"name":"Road Dust\/Soil","color":"#088996","y":0.67,"sd":0.31}],"sub":[{"name":"Sulphate","y":1.33,"sd":0.22},{"name":"Nitrate","y":4.15,"sd":0.71},{"name":"Ammonia","y":4,"sd":0.48}]}];
+  function rtRender() { var items = d.items.slice(); }
+})();
+</script>
+</body></html>

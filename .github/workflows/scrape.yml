@@ -1,0 +1,59 @@
+name: Scrape PM2.5 source apportionment
+
+on:
+  schedule:
+    - cron: "23 8 * * *"   # 13:53 IST - main run
+    - cron: "23 14 * * *"  # 19:53 IST - backup run (no-op if the first run already got the data)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Scrape
+        id: scrape
+        continue-on-error: true
+        run: python scraper/scrape.py
+
+      - name: Commit data and run log
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data logs
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: source apportionment $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M IST') [${{ steps.scrape.outcome }}]"
+          for i in 1 2 3; do
+            git pull --rebase && git push && break
+            sleep 10
+          done
+
+      - name: Fail the job if the scrape failed
+        if: steps.scrape.outcome == 'failure'
+        run: |
+          echo "::error::Scrape failed - see the Scrape step log and logs/run_log.csv"
+          exit 1
