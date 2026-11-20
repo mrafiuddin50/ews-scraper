@@ -1,0 +1,161 @@
+{
+  "scraped_at_utc": "2026-11-20T05:18:57Z",
+  "source_url": "https://ews.tropmet.res.in/index.php",
+  "sa_date": "2026-11-11",
+  "date_label": "Wed, 11 Nov",
+  "sources": [
+    {
+      "source": "Delhi Transport",
+      "pct": 20.17,
+      "local": true
+    },
+    {
+      "source": "Jhajjar",
+      "pct": 13.17,
+      "local": false
+    },
+    {
+      "source": "Others",
+      "pct": 9.61,
+      "local": false
+    },
+    {
+      "source": "Stubble Burning",
+      "pct": 9.19,
+      "local": false
+    },
+    {
+      "source": "Gurgaon",
+      "pct": 6.57,
+      "local": false
+    },
+    {
+      "source": "Delhi Residential",
+      "pct": 5.07,
+      "local": true
+    },
+    {
+      "source": "Delhi & peripheral Industries",
+      "pct": 3.96,
+      "local": true
+    },
+    {
+      "source": "Sonipat",
+      "pct": 3.11,
+      "local": false
+    },
+    {
+      "source": "Delhi Construction",
+      "pct": 2.78,
+      "local": true
+    },
+    {
+      "source": "Rohtak",
+      "pct": 2.2,
+      "local": false
+    },
+    {
+      "source": "Muzaffarnagar",
+      "pct": 2.17,
+      "local": false
+    },
+    {
+      "source": "Ghaziabad",
+      "pct": 2.14,
+      "local": false
+    },
+    {
+      "source": "Bhiwani",
+      "pct": 2.04,
+      "local": false
+    },
+    {
+      "source": "Gautam Buddha Nagar",
+      "pct": 1.84,
+      "local": false
+    },
+    {
+      "source": "Delhi Waste burning",
+      "pct": 1.79,
+      "local": true
+    },
+    {
+      "source": "Panipat",
+      "pct": 1.74,
+      "local": false
+    },
+    {
+      "source": "Delhi Energy",
+      "pct": 1.68,
+      "local": true
+    },
+    {
+      "source": "Bagpat",
+      "pct": 1.66,
+      "local": false
+    },
+    {
+      "source": "Delhi Road Dust",
+      "pct": 1.49,
+      "local": true
+    },
+    {
+      "source": "Delhi Other Sectors",
+      "pct": 1.37,
+      "local": true
+    },
+    {
+      "source": "Faridabad",
+      "pct": 1.26,
+      "local": false
+    },
+    {
+      "source": "Meerut",
+      "pct": 1.16,
+      "local": false
+    },
+    {
+      "source": "Mahendergarh",
+      "pct": 0.96,
+      "local": false
+    },
+    {
+      "source": "Bulandshahr",
+      "pct": 0.82,
+      "local": false
+    },
+    {
+      "source": "Rewari",
+      "pct": 0.71,
+      "local": false
+    },
+    {
+      "source": "Karnal",
+      "pct": 0.53,
+      "local": false
+    },
+    {
+      "source": "Jind",
+      "pct": 0.39,
+      "local": false
+    },
+    {
+      "source": "Alwar",
+      "pct": 0.29,
+      "local": false
+    },
+    {
+      "source": "Bharatpur",
+      "pct": 0.14,
+      "local": false
+    }
+  ],
+  "summary": {
+    "local_pct": 38.31,
+    "nonlocal_pct": 61.7,
+    "dominant_source": "Delhi Transport",
+    "dominant_pct": 20.17,
+    "n_sources": 29,
+    "sum_pct": 100.01
+  }
+}
