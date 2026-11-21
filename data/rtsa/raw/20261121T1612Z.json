@@ -1,0 +1,432 @@
+{
+  "scraped_at_utc": "2026-11-21T16:12:27Z",
+  "source_url": "https://ews.tropmet.res.in/index.php",
+  "days": [
+    {
+      "date": "2026-11-16",
+      "label": "Mon, 16 Nov 2026",
+      "total": 147.7,
+      "partial": false,
+      "sources": [
+        {
+          "source": "Secondary Organic",
+          "pct": 27.52,
+          "sd": 12.54
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 26,
+          "sd": 17.81
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 13.78,
+          "sd": 12.55
+        },
+        {
+          "source": "Vehicles",
+          "pct": 12.81,
+          "sd": 6.13
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 11.21,
+          "sd": 5.45
+        },
+        {
+          "source": "Firecrackers",
+          "pct": 4.23,
+          "sd": 7.71
+        },
+        {
+          "source": "Industrial",
+          "pct": 2.71,
+          "sd": 1.68
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 0.92,
+          "sd": 0.29
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 0.83,
+          "sd": 0.89
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 2.77,
+          "sd": 0.84
+        },
+        {
+          "component": "Nitrate",
+          "pct": 4.37,
+          "sd": 2.5
+        },
+        {
+          "component": "Ammonia",
+          "pct": 4.07,
+          "sd": 2.38
+        }
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "label": "Tue, 17 Nov 2026",
+      "total": 65.4,
+      "partial": false,
+      "sources": [
+        {
+          "source": "Secondary Organic",
+          "pct": 36.28,
+          "sd": 11.32
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 24.34,
+          "sd": 12.36
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 11.96,
+          "sd": 6.5
+        },
+        {
+          "source": "Vehicles",
+          "pct": 11.15,
+          "sd": 4.58
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 8.87,
+          "sd": 3.33
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 4.96,
+          "sd": 1.52
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 1.75,
+          "sd": 1.34
+        },
+        {
+          "source": "Firecrackers",
+          "pct": 0.42,
+          "sd": 0.44
+        },
+        {
+          "source": "Industrial",
+          "pct": 0.28,
+          "sd": 0.21
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 2.13,
+          "sd": 0.59
+        },
+        {
+          "component": "Nitrate",
+          "pct": 3.47,
+          "sd": 1.41
+        },
+        {
+          "component": "Ammonia",
+          "pct": 3.26,
+          "sd": 1.44
+        }
+      ]
+    },
+    {
+      "date": "2026-11-18",
+      "label": "Wed, 18 Nov 2026",
+      "total": 101.5,
+      "partial": false,
+      "sources": [
+        {
+          "source": "Vehicles",
+          "pct": 28.49,
+          "sd": 17.47
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 23.81,
+          "sd": 12.13
+        },
+        {
+          "source": "Secondary Organic",
+          "pct": 18.2,
+          "sd": 6.82
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 12.77,
+          "sd": 8.66
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 7.99,
+          "sd": 2.85
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 3.04,
+          "sd": 1.24
+        },
+        {
+          "source": "Firecrackers",
+          "pct": 2.66,
+          "sd": 2.77
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 1.95,
+          "sd": 1.86
+        },
+        {
+          "source": "Industrial",
+          "pct": 1.08,
+          "sd": 0.95
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 1.44,
+          "sd": 0.24
+        },
+        {
+          "component": "Nitrate",
+          "pct": 2.29,
+          "sd": 2
+        },
+        {
+          "component": "Ammonia",
+          "pct": 3.16,
+          "sd": 1.28
+        }
+      ]
+    },
+    {
+      "date": "2026-11-19",
+      "label": "Thu, 19 Nov 2026",
+      "total": 148.1,
+      "partial": false,
+      "sources": [
+        {
+          "source": "Secondary Organic",
+          "pct": 26.57,
+          "sd": 5.23
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 21.41,
+          "sd": 9.35
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 20.1,
+          "sd": 9.05
+        },
+        {
+          "source": "Vehicles",
+          "pct": 16.61,
+          "sd": 4.91
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 10,
+          "sd": 2.9
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 2.51,
+          "sd": 1.87
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 1.99,
+          "sd": 1.5
+        },
+        {
+          "source": "Industrial",
+          "pct": 0.81,
+          "sd": 0.6
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 1.08,
+          "sd": 0.28
+        },
+        {
+          "component": "Nitrate",
+          "pct": 5.03,
+          "sd": 1.44
+        },
+        {
+          "component": "Ammonia",
+          "pct": 3.89,
+          "sd": 1.32
+        }
+      ]
+    },
+    {
+      "date": "2026-11-20",
+      "label": "Fri, 20 Nov 2026",
+      "total": 119.1,
+      "partial": false,
+      "sources": [
+        {
+          "source": "Secondary Organic",
+          "pct": 22.76,
+          "sd": 5.79
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 22.51,
+          "sd": 13.87
+        },
+        {
+          "source": "Vehicles",
+          "pct": 20.12,
+          "sd": 17.39
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 11.09,
+          "sd": 10.25
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 10.82,
+          "sd": 2.27
+        },
+        {
+          "source": "Firecrackers",
+          "pct": 3.17,
+          "sd": 4.51
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 2.84,
+          "sd": 1.48
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 2.72,
+          "sd": 1.71
+        },
+        {
+          "source": "Industrial",
+          "pct": 2.02,
+          "sd": 1.62
+        },
+        {
+          "source": "Mix Combustion",
+          "pct": 1.94,
+          "sd": 2.5
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 1.81,
+          "sd": 0.35
+        },
+        {
+          "component": "Nitrate",
+          "pct": 5.1,
+          "sd": 1.23
+        },
+        {
+          "component": "Ammonia",
+          "pct": 3.91,
+          "sd": 1.11
+        }
+      ]
+    },
+    {
+      "date": "2026-11-21",
+      "label": "Sat, 21 Nov 2026",
+      "total": 153.1,
+      "partial": true,
+      "sources": [
+        {
+          "source": "Vehicles",
+          "pct": 33.14,
+          "sd": 11.19
+        },
+        {
+          "source": "Secondary Organic",
+          "pct": 16.49,
+          "sd": 5.14
+        },
+        {
+          "source": "Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",
+          "pct": 13.94,
+          "sd": 2.02
+        },
+        {
+          "source": "Secondary Inorganic",
+          "pct": 9.59,
+          "sd": 1.02
+        },
+        {
+          "source": "Waste Burning (Municipal/plastic-rubber containing /e-waste)",
+          "pct": 9.45,
+          "sd": 2.21
+        },
+        {
+          "source": "Firecrackers",
+          "pct": 7.7,
+          "sd": 1.75
+        },
+        {
+          "source": "Industrial",
+          "pct": 3.33,
+          "sd": 2.74
+        },
+        {
+          "source": "Mix Combustion",
+          "pct": 2.68,
+          "sd": 1.52
+        },
+        {
+          "source": "Road Dust/Soil",
+          "pct": 2.37,
+          "sd": 1.04
+        },
+        {
+          "source": "Coal Combustion",
+          "pct": 1.31,
+          "sd": 0.5
+        }
+      ],
+      "secondary_inorganic": [
+        {
+          "component": "Sulphate",
+          "pct": 1.97,
+          "sd": 0.21
+        },
+        {
+          "component": "Nitrate",
+          "pct": 4.36,
+          "sd": 0.67
+        },
+        {
+          "component": "Ammonia",
+          "pct": 3.27,
+          "sd": 0.33
+        }
+      ]
+    }
+  ],
+  "partial_note": "* Only from 1 AM to 9 AM"
+}
