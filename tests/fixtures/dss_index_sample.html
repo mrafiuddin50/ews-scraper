@@ -1,0 +1,109 @@
+<!-- Trimmed excerpt of https://ews.tropmet.res.in/dss/index.php captured 23 Nov 2026.
+     Daily-mean chart cut to 5 of 29 sources; stubble series complete. -->
+<html><body>
+<h5 class="weather-head text-black text-center">Daily Mean contribution from Stubble Burning to the PM2.5 mass concentration in Delhi</h5>
+<canvas style="background-color: #fff" id="stack_chartjs_bar1"></canvas>
+<h5 class="weather-head text-black text-center">Daily Mean of Local and Non-Local Fractional Contribution to PM<sub>2.5</sub> in Delhi for the next four days</h5>
+<canvas style="background-color: #fff" id="chartjs_bar_mean"></canvas>
+<p style="FONT-WEIGHT: bold; font-size: 18px">Disclaimer: The region and source-wise contributions are based on the emissions inventory formulated in 2021. For more accurate estimation of source-contribution, the latest emission fields are required.</p>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+        const jhajjar = ['jhajjar Energy : 12', 'jhajjar Transport :12'];
+            //setup
+            const data = {
+                labels:["2026-11-11","2026-11-12","2026-11-13","2026-11-14"],
+
+                datasets: [
+                    {
+                        label: 'Delhi Energy',
+                        backgroundColor: "#5833FF",
+                        borderColor: "#5833FF",
+                        borderWidth:2,
+                        //barThickness: 120,
+                        stack: "Base",
+                        data:[1.6814166666667,1.395375,1.6804583333333,1.5775416666667],
+                    },
+                    {
+                        label: 'Delhi Transport',
+                        backgroundColor: "#e9b221",
+                        borderColor: "#e9b221",
+                        borderWidth:2,
+                        //barThickness: 120,
+                        stack: "Base",
+                        data:[20.166625,16.004166666667,18.519,20.543916666667],
+                    },
+                    {
+                        label: 'Delhi & peripheral Industries',
+                        backgroundColor: "#e05a74",
+                        borderColor: "#e05a74",
+                        borderWidth:2,
+                        //barThickness: 120,
+                        stack: "Base",
+                        data:[3.9589166666667,3.284375,3.767,4.0790416666667],
+                    },
+                    {
+                        label: 'Stubble Burning',
+                        backgroundColor: "#a31430",
+                        borderColor: "#a31430",
+                        borderWidth:2,
+                        //barThickness: 120,
+                        stack: "Base",
+                        data:[9.1909583333333,8.97775,5.3170416666667,13.294083333333],
+                    },
+                    {
+                        label: 'Others',
+                        backgroundColor: "rgb(189,223,228)",
+                        borderColor: "rgb(189,223,228)",
+                        borderWidth:2,
+                        //barThickness: 120,
+                        stack: "Base",
+                        data:[9.6143333333333,20.226166666667,18.183583333333,21.665583333333],
+                    },
+                ]
+            };
+            const logoPlugin = {
+                id: 'logo',
+                beforeDraw: (chart) => {
+                    const logowidth = 47;
+                    ctx.save();
+                }
+            };
+        //    const tooltip ={
+//            callbacks:
+//                title:function(context){
+//            };
+            //config
+            const config = {
+                type: 'bar',
+                data,
+                options: { maintainAspectRatio:true, animation:true }
+            };
+            const myChart = new Chart(document.getElementById("chartjs_bar_mean"), config);
+</script>
+<script type="text/javascript">
+            //setup
+            const data2 = {
+                labels:["2026-10-03 12:00:00","2026-10-04 12:00:00","2026-10-06 12:00:00","2026-10-07 12:00:00","2026-10-08 12:00:00","2026-10-09 12:00:00","2026-10-10 12:00:00","2026-10-11 12:00:00","2026-10-12 12:00:00","2026-10-13 12:00:00","2026-10-14 12:00:00","2026-10-15 12:00:00","2026-10-16 12:00:00","2026-10-17 12:00:00","2026-10-18 12:00:00","2026-10-19 12:00:00","2026-10-20 12:00:00","2026-10-21 12:00:00","2026-10-22 12:00:00","2026-10-23 12:00:00","2026-10-24 12:00:00","2026-10-25 12:00:00","2026-10-26 12:00:00","2026-10-27 12:00:00","2026-10-28 12:00:00","2026-10-29 12:00:00","2026-10-30 12:00:00","2026-10-31 12:00:00","2026-11-01 12:00:00","2026-11-02 12:00:00","2026-11-03 12:00:00","2026-11-04 12:00:00","2026-11-05 12:00:00","2026-11-06 12:00:00","2026-11-07 12:00:00","2026-11-08 12:00:00","2026-11-09 12:00:00","2026-11-10 12:00:00","2026-11-11 12:00:00"],
+                datasets: [
+                    {
+                        label: 'Stubble Burning',
+                        backgroundColor: "#a31430",
+                        borderWidth:1,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                        pointHitRadius:20,
+                        stack: "Base",
+                        data:[0.00158,0.02979,0.32413,0.11096,0.15729,0.07579,0.18638,0.37258,0.28625,0.61371,0.94325,0.645,0.52358,0.42213,0.20879,0.65525,4.04575,3.90354,4.14775,5.16429,4.09513,5.21192,4.68429,1.56258,0.97542,0.98258,1.74913,5.33604,11.50592,8.58296,8.21375,16.27963,14.20921,7.905,7.61367,5.05304,7.55396,5.12529,9.19096],
+                    },
+
+                ]
+            };
+
+
+            //config
+            const config2 = { type: 'bar', data: data2 };
+            const myChart2 = new Chart(document.getElementById("stack_chartjs_bar1"), config2);
+</script>
+</body></html>

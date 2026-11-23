@@ -12,9 +12,20 @@ Two datasets are embedded in the homepage HTML as JavaScript arrays:
     +/- SD per source, a daily total, and a sulphate/nitrate/ammonia split of
     the "Secondary Inorganic" share. A date tab ending in "*" is a partial day.
 
+It also reads the DSS page itself, https://ews.tropmet.res.in/dss/index.php,
+which holds two Chart.js datasets the homepage does not show in full:
+
+  * Daily-mean local and non-local fractional contribution to PM2.5 in Delhi
+    for the model run's four days (`const data = {...}`), 29 sources.
+  * Season-to-date daily-mean stubble-burning contribution (`const data2 = {...}`).
+
+That page stalls for about two minutes before sending its data, so it is
+fetched with a long read timeout. The homepage and the DSS page are handled
+independently: a failure on one does not stop the other from being saved.
+
 Values are stored exactly as published. Each run appends a line to
 logs/run_log.csv; data files only change when the site's values change.
-Exit code is non-zero if fetching or parsing fails.
+Exit code is non-zero if fetching or parsing either page fails.
 """
 
 from __future__ import annotations
@@ -33,6 +44,7 @@ from pathlib import Path
 import requests
 
 URL = "https://ews.tropmet.res.in/index.php"
+DSS_PAGE_URL = "https://ews.tropmet.res.in/dss/index.php"
 IST = timezone(timedelta(hours=5, minutes=30))
 USER_AGENT = (
     "ews-scraper/1.0 (research data archive; "
@@ -47,9 +59,15 @@ DSS_SUMMARY_FIELDS = [
 ]
 RTSA_FIELDS = ["date", "source", "pct", "sd", "total", "partial", "scraped_at_utc"]
 RTSA_SUB_FIELDS = ["date", "component", "pct", "sd", "partial", "scraped_at_utc"]
+DSS_FC_FIELDS = [
+    "run_date", "forecast_date", "lead_day", "source", "pct", "local", "scraped_at_utc",
+]
+STUBBLE_FIELDS = ["date", "stubble_pct", "scraped_at_utc"]
 LOG_FIELDS = [
     "run_utc", "run_ist", "status", "dss_date", "dss_changed",
-    "rtsa_dates", "rtsa_changed", "message",
+    "rtsa_dates", "rtsa_changed",
+    "dsspage_run_date", "dsspage_changed", "stubble_last_date", "stubble_changed",
+    "message",
 ]
 
 
@@ -60,7 +78,7 @@ class ScrapeError(RuntimeError):
 # --------------------------------------------------------------------------- #
 # Fetch
 # --------------------------------------------------------------------------- #
-def fetch(url: str = URL, retries: int = 3, timeout: int = 60) -> str:
+def fetch(url: str = URL, retries: int = 3, timeout=60) -> str:
     last = None
     for attempt in range(1, retries + 1):
         try:
@@ -200,6 +218,123 @@ def parse_rtsa(html: str) -> dict:
     return {"days": days, "partial_note": note_text}
 
 
+# ---- DSS page (Chart.js object literals, not JSON) ------------------------- #
+def _match_bracket(text: str, start: int) -> int:
+    """Index just past the bracket that closes text[start], skipping strings and comments."""
+    pairs = {"[": "]", "{": "}"}
+    stack = [pairs[text[start]]]
+    i = start + 1
+    while i < len(text):
+        c = text[i]
+        if c in "'\"":
+            j = i + 1
+            while j < len(text) and text[j] != c:
+                j += 2 if text[j] == "\\" else 1
+            i = j + 1
+            continue
+        if text.startswith("//", i):
+            nl = text.find("\n", i)
+            i = len(text) if nl < 0 else nl
+            continue
+        if text.startswith("/*", i):
+            end = text.find("*/", i + 2)
+            i = len(text) if end < 0 else end + 2
+            continue
+        if c in pairs:
+            stack.append(pairs[c])
+        elif c in "]}":
+            if not stack or c != stack.pop():
+                raise ScrapeError("unbalanced brackets in chart data")
+            if not stack:
+                return i + 1
+        i += 1
+    raise ScrapeError("unterminated chart data object")
+
+
+def _chart_object(html: str, name: str) -> str:
+    m = re.search(rf"\bconst\s+{re.escape(name)}\s*=\s*\{{", html)
+    if not m:
+        raise ScrapeError(f"chart data object `const {name}` not found")
+    start = m.end() - 1
+    return html[start:_match_bracket(html, start)]
+
+
+def _chart_series(obj: str, name: str) -> tuple[list[str], list[tuple[str, list[float]]]]:
+    """Return (labels, [(dataset label, values), ...]) from a Chart.js data literal."""
+    # Drop line comments that are not inside strings (e.g. `//barThickness: 120,`).
+    clean = re.sub(r"(?m)(^|[\s,{\[])//[^\n]*", r"\1", obj)
+    lm = re.search(r"\blabels\s*:\s*\[", clean)
+    if not lm:
+        raise ScrapeError(f"`{name}`: labels not found")
+    lab_src = clean[lm.end() - 1:_match_bracket(clean, lm.end() - 1)]
+    labels = [a or b for a, b in re.findall(r'"([^"]*)"|\'([^\']*)\'', lab_src)]
+
+    dm = re.search(r"\bdatasets\s*:\s*\[", clean)
+    if not dm:
+        raise ScrapeError(f"`{name}`: datasets not found")
+    ds_src = clean[dm.end() - 1:_match_bracket(clean, dm.end() - 1)]
+
+    series = []
+    pos = 1
+    while True:
+        k = ds_src.find("{", pos)
+        if k < 0:
+            break
+        end = _match_bracket(ds_src, k)
+        block = ds_src[k:end]
+        pos = end
+        lab = re.search(r"\blabel\s*:\s*(['\"])(.*?)\1", block, flags=re.S)
+        dat = re.search(r"\bdata\s*:\s*\[([^\]]*)\]", block)
+        if not lab or not dat:
+            continue
+        vals = []
+        for tok in (t.strip() for t in dat.group(1).split(",")):
+            if not tok:
+                continue
+            try:
+                vals.append(float(tok))
+            except ValueError as exc:
+                raise ScrapeError(f"`{name}`/{lab.group(2)}: non-numeric value {tok!r}") from exc
+        if len(vals) != len(labels):
+            raise ScrapeError(
+                f"`{name}`/{lab.group(2)}: {len(vals)} values for {len(labels)} labels"
+            )
+        series.append((htmllib.unescape(lab.group(2)), vals))
+    if not series:
+        raise ScrapeError(f"`{name}`: no datasets parsed")
+    return labels, series
+
+
+def parse_dss_page(html: str) -> dict:
+    labels, series = _chart_series(_chart_object(html, "data"), "data")
+    dates = [date.fromisoformat(l[:10]).isoformat() for l in labels]
+    sources = [
+        # The DSS page has no local flag; the homepage marks exactly the
+        # "Delhi ..." sources as local, so the same rule is applied here.
+        {"source": n, "local": n.startswith("Delhi"), "values": v}
+        for n, v in series
+    ]
+    sums = [round(sum(s["values"][i] for s in sources), 2) for i in range(len(dates))]
+
+    s_labels, s_series = _chart_series(_chart_object(html, "data2"), "data2")
+    stub = dict(s_series)
+    if "Stubble Burning" not in stub:
+        raise ScrapeError("`data2`: 'Stubble Burning' series not found")
+    stubble = [
+        {"date": date.fromisoformat(l[:10]).isoformat(), "stubble_pct": v}
+        for l, v in zip(s_labels, stub["Stubble Burning"])
+    ]
+    return {
+        "forecast": {
+            "run_date": dates[0],
+            "dates": dates,
+            "sources": sources,
+            "sum_pct_by_day": sums,
+        },
+        "stubble": stubble,
+    }
+
+
 # --------------------------------------------------------------------------- #
 # Storage
 # --------------------------------------------------------------------------- #
@@ -246,7 +381,9 @@ def store(dss: dict, rtsa: dict, data_dir: Path, now_utc: datetime) -> dict:
     stamp = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
     file_stamp = now_utc.strftime("%Y%m%dT%H%MZ")
     state_path = data_dir / "state.json"
-    state = json.loads(state_path.read_text()) if state_path.exists() else {"dss": {}, "rtsa": {}}
+    state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    state.setdefault("dss", {})
+    state.setdefault("rtsa", {})
 
     # ---- DSS ----------------------------------------------------------------
     dss_fp = fingerprint(dss["sources"])
@@ -307,8 +444,66 @@ def store(dss: dict, rtsa: dict, data_dir: Path, now_utc: datetime) -> dict:
     }
 
 
+def store_dss_page(page: dict, data_dir: Path, now_utc: datetime) -> dict:
+    stamp = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    file_stamp = now_utc.strftime("%Y%m%dT%H%MZ")
+    out = data_dir / "dss_page"
+    state_path = data_dir / "state.json"
+    state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    state.setdefault("dss_page", {})
+    state.setdefault("stubble", {})
+
+    fc = page["forecast"]
+    run = fc["run_date"]
+    fp = fingerprint({"dates": fc["dates"], "sources": fc["sources"]})
+    fc_changed = state["dss_page"].get(run) != fp
+    if fc_changed:
+        rows = [
+            {"run_date": run, "forecast_date": d, "lead_day": i, "source": s["source"],
+             "pct": s["values"][i], "local": s["local"], "scraped_at_utc": stamp}
+            for s in fc["sources"] for i, d in enumerate(fc["dates"])
+        ]
+        replace_rows(
+            out / "forecast_history.csv", DSS_FC_FIELDS, "run_date", {run}, rows,
+            sort_keys=lambda r: (r["run_date"], r["forecast_date"], -_num(r["pct"])),
+        )
+        snapshot = {"scraped_at_utc": stamp, "source_url": DSS_PAGE_URL, **page}
+        write_json(out / "raw" / f"{run}_{file_stamp}.json", snapshot)
+        state["dss_page"][run] = fp
+
+    changed_dates = []
+    for row in page["stubble"]:
+        f = fingerprint(row["stubble_pct"])
+        if state["stubble"].get(row["date"]) != f:
+            changed_dates.append(row["date"])
+            state["stubble"][row["date"]] = f
+    if changed_dates:
+        replace_rows(
+            out / "stubble_daily.csv", STUBBLE_FIELDS, "date", set(changed_dates),
+            [{**r, "scraped_at_utc": stamp} for r in page["stubble"] if r["date"] in changed_dates],
+            sort_keys=lambda r: r["date"],
+        )
+    if fc_changed or changed_dates:
+        write_json(out / "latest.json", {"scraped_at_utc": stamp, "source_url": DSS_PAGE_URL, **page})
+
+    write_json(state_path, state)
+    return {
+        "dsspage_run_date": run,
+        "dsspage_changed": fc_changed,
+        "stubble_last_date": page["stubble"][-1]["date"] if page["stubble"] else "",
+        "stubble_changed": len(changed_dates),
+    }
+
+
 def append_log(log_path: Path, now_utc: datetime, status: str, result: dict | None, message: str):
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    # Older logs have fewer columns: rewrite them once under the current header.
+    if log_path.exists():
+        with log_path.open(newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            old_fields, old_rows = reader.fieldnames, list(reader)
+        if old_fields != LOG_FIELDS:
+            write_csv(log_path, LOG_FIELDS, [{k: r.get(k, "") for k in LOG_FIELDS} for r in old_rows])
     new = not log_path.exists()
     r = result or {}
     with log_path.open("a", newline="", encoding="utf-8") as f:
@@ -323,6 +518,10 @@ def append_log(log_path: Path, now_utc: datetime, status: str, result: dict | No
             "dss_changed": r.get("dss_changed", ""),
             "rtsa_dates": ";".join(r.get("rtsa_dates", [])),
             "rtsa_changed": ";".join(r.get("rtsa_changed", [])),
+            "dsspage_run_date": r.get("dsspage_run_date", ""),
+            "dsspage_changed": r.get("dsspage_changed", ""),
+            "stubble_last_date": r.get("stubble_last_date", ""),
+            "stubble_changed": r.get("stubble_changed", ""),
             "message": message[:300],
         })
 
@@ -330,28 +529,55 @@ def append_log(log_path: Path, now_utc: datetime, status: str, result: dict | No
 # --------------------------------------------------------------------------- #
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--html", type=Path, help="parse a saved HTML file instead of fetching")
+    ap.add_argument("--html", type=Path, help="parse a saved homepage HTML file instead of fetching")
+    ap.add_argument("--dss-html", type=Path, help="parse a saved dss/index.php HTML file instead of fetching")
+    ap.add_argument("--skip-home", action="store_true", help="do not scrape the homepage")
+    ap.add_argument("--skip-dss-page", action="store_true", help="do not scrape dss/index.php")
     ap.add_argument("--root", type=Path, default=ROOT, help="repository root (default: auto)")
     args = ap.parse_args(argv)
 
     now_utc = datetime.now(timezone.utc).replace(microsecond=0)
     log_path = args.root / "logs" / "run_log.csv"
-    try:
-        html = args.html.read_text(encoding="utf-8") if args.html else fetch()
-        today_ist = now_utc.astimezone(IST).date()
-        dss = parse_dss(html, today_ist)
-        rtsa = parse_rtsa(html)
-        result = store(dss, rtsa, args.root / "data", now_utc)
-    except Exception as exc:  # log every failure, then fail the job
-        append_log(log_path, now_utc, "error", None, f"{type(exc).__name__}: {exc}")
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
+    data_dir = args.root / "data"
+    result, errors, changed = {}, [], False
 
-    changed = result["dss_changed"] or bool(result["rtsa_changed"])
-    msg = "new data" if changed else "no change"
-    append_log(log_path, now_utc, "ok", result, msg)
-    print(json.dumps({**result, "status": msg}, indent=2))
-    return 0
+    if not args.skip_home:
+        try:
+            html = args.html.read_text(encoding="utf-8") if args.html else fetch()
+            today_ist = now_utc.astimezone(IST).date()
+            r = store(parse_dss(html, today_ist), parse_rtsa(html), data_dir, now_utc)
+            result.update(r)
+            changed |= r["dss_changed"] or bool(r["rtsa_changed"])
+        except Exception as exc:
+            errors.append(f"homepage: {type(exc).__name__}: {exc}")
+
+    if not args.skip_dss_page:
+        try:
+            if args.dss_html:
+                page_html = args.dss_html.read_text(encoding="utf-8")
+            else:
+                # The page stalls ~120 s mid-response before sending its chart
+                # data, so the read timeout must outlast that pause.
+                page_html = fetch(DSS_PAGE_URL, retries=2, timeout=(30, 300))
+            r = store_dss_page(parse_dss_page(page_html), data_dir, now_utc)
+            result.update(r)
+            changed |= r["dsspage_changed"] or bool(r["stubble_changed"])
+        except Exception as exc:
+            errors.append(f"dss page: {type(exc).__name__}: {exc}")
+
+    attempted = (not args.skip_home) + (not args.skip_dss_page)
+    if errors:
+        status = "error" if len(errors) == attempted else "partial"
+        msg = " | ".join(errors)
+        if changed:
+            msg = "new data; " + msg
+    else:
+        status, msg = "ok", ("new data" if changed else "no change")
+    append_log(log_path, now_utc, status, result, msg)
+    print(json.dumps({**result, "status": status, "message": msg}, indent=2, default=str))
+    for e in errors:
+        print(f"ERROR: {e}", file=sys.stderr)
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":

@@ -95,10 +95,106 @@ class StoreTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bad = Path(tmp) / "bad.html"
             bad.write_text("<html>maintenance</html>")
-            rc = scrape.main(["--html", str(bad), "--root", tmp])
+            rc = scrape.main(["--html", str(bad), "--skip-dss-page", "--root", tmp])
             self.assertEqual(rc, 1)
             log = (Path(tmp) / "logs" / "run_log.csv").read_text()
             self.assertIn(",error,", log)
+
+    def test_one_page_failing_still_saves_the_other(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bad = Path(tmp) / "bad.html"
+            bad.write_text("<html>maintenance</html>")
+            rc = scrape.main(["--html", str(bad), "--dss-html", str(DSS_FIXTURE), "--root", tmp])
+            self.assertEqual(rc, 1)
+            self.assertTrue((Path(tmp) / "data" / "dss_page" / "forecast_history.csv").exists())
+            with (Path(tmp) / "logs" / "run_log.csv").open() as f:
+                last = list(csv.DictReader(f))[-1]
+            self.assertEqual(last["status"], "partial")
+            self.assertEqual(last["dsspage_run_date"], "2026-11-11")
+
+    def test_old_log_header_is_migrated(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log = Path(tmp) / "logs" / "run_log.csv"
+            log.parent.mkdir()
+            log.write_text(
+                "run_utc,run_ist,status,dss_date,dss_changed,rtsa_dates,rtsa_changed,message\n"
+                "2026-11-20T05:18:57Z,2026-11-20 10:48,ok,2026-11-11,True,2026-11-14,2026-11-14,new data\n"
+            )
+            scrape.main(["--skip-home", "--dss-html", str(DSS_FIXTURE), "--root", tmp])
+            with log.open() as f:
+                rows = list(csv.DictReader(f))
+            self.assertEqual(list(rows[0].keys()), scrape.LOG_FIELDS)
+            self.assertEqual(rows[0]["dss_date"], "2026-11-11")
+            self.assertEqual(rows[0]["message"], "new data")
+            self.assertEqual(rows[1]["dsspage_changed"], "True")
+
+
+DSS_FIXTURE = ROOT / "tests" / "fixtures" / "dss_index_sample.html"
+
+
+class DssPageTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.page = scrape.parse_dss_page(DSS_FIXTURE.read_text(encoding="utf-8"))
+
+    def test_forecast(self):
+        fc = self.page["forecast"]
+        self.assertEqual(fc["run_date"], "2026-11-11")
+        self.assertEqual(fc["dates"], ["2026-11-11", "2026-11-12", "2026-11-13", "2026-11-14"])
+        names = [s["source"] for s in fc["sources"]]
+        self.assertEqual(names, ["Delhi Energy", "Delhi Transport", "Delhi & peripheral Industries",
+                                 "Stubble Burning", "Others"])
+        self.assertEqual(fc["sources"][1]["values"], [20.166625, 16.004166666667, 18.519, 20.543916666667])
+        self.assertEqual([s["local"] for s in fc["sources"]], [True, True, True, False, False])
+
+    def test_stubble(self):
+        st = self.page["stubble"]
+        self.assertEqual(len(st), 39)
+        self.assertEqual(st[0], {"date": "2026-10-03", "stubble_pct": 0.00158})
+        self.assertEqual(st[-1], {"date": "2026-11-11", "stubble_pct": 9.19096})
+        self.assertNotIn("2026-10-05", [r["date"] for r in st])  # gap on the site
+
+    def test_matches_homepage_day_one(self):
+        home = scrape.parse_dss(FIXTURE.read_text(encoding="utf-8"), date(2026, 11, 20))
+        home_vals = {s["source"]: s["pct"] for s in home["sources"]}
+        for s in self.page["forecast"]["sources"]:
+            self.assertAlmostEqual(round(s["values"][0], 2), home_vals[s["source"]], places=2)
+
+    def test_store_dedupe_and_revision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp) / "data"
+            t = datetime(2026, 11, 23, 8, 23, tzinfo=timezone.utc)
+            r1 = scrape.store_dss_page(self.page, d, t)
+            self.assertTrue(r1["dsspage_changed"])
+            self.assertEqual(r1["stubble_changed"], 39)
+            r2 = scrape.store_dss_page(self.page, d, t)
+            self.assertFalse(r2["dsspage_changed"])
+            self.assertEqual(r2["stubble_changed"], 0)
+            with (d / "dss_page" / "forecast_history.csv").open() as f:
+                rows = list(csv.DictReader(f))
+            self.assertEqual(len(rows), 5 * 4)
+            self.assertEqual({r["lead_day"] for r in rows}, {"0", "1", "2", "3"})
+
+            # A new model run adds rows; earlier runs are kept
+            page2 = json.loads(json.dumps(self.page))
+            page2["forecast"]["run_date"] = "2026-11-24"
+            page2["forecast"]["dates"] = ["2026-11-24", "2026-11-25", "2026-11-26", "2026-11-27"]
+            page2["stubble"].append({"date": "2026-11-24", "stubble_pct": 3.2})
+            r3 = scrape.store_dss_page(page2, d, t)
+            self.assertTrue(r3["dsspage_changed"])
+            self.assertEqual(r3["stubble_changed"], 1)
+            with (d / "dss_page" / "forecast_history.csv").open() as f:
+                runs = {r["run_date"] for r in csv.DictReader(f)}
+            self.assertEqual(runs, {"2026-11-11", "2026-11-24"})
+
+    def test_malformed_fails(self):
+        with self.assertRaises(scrape.ScrapeError):
+            scrape.parse_dss_page("<html><script>const data = {labels:[\"2026-11-11\"]};</script></html>")
+        broken = DSS_FIXTURE.read_text(encoding="utf-8").replace(
+            "data:[1.6814166666667,1.395375,1.6804583333333,1.5775416666667]",
+            "data:[1.6814166666667,1.395375]")
+        with self.assertRaises(scrape.ScrapeError):
+            scrape.parse_dss_page(broken)
 
 
 if __name__ == "__main__":
