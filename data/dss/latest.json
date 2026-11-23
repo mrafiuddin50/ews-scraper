@@ -1,161 +1,146 @@
 {
-  "scraped_at_utc": "2026-11-20T05:18:57Z",
+  "scraped_at_utc": "2026-11-23T20:18:48Z",
   "source_url": "https://ews.tropmet.res.in/index.php",
-  "sa_date": "2026-11-11",
-  "date_label": "Wed, 11 Nov",
+  "sa_date": "2026-11-23",
+  "date_label": "Mon, 23 Nov",
   "sources": [
     {
+      "source": "Others",
+      "pct": 32.02,
+      "local": false
+    },
+    {
       "source": "Delhi Transport",
-      "pct": 20.17,
+      "pct": 21.46,
       "local": true
     },
     {
       "source": "Jhajjar",
-      "pct": 13.17,
+      "pct": 10.23,
       "local": false
     },
     {
-      "source": "Others",
-      "pct": 9.61,
-      "local": false
-    },
-    {
-      "source": "Stubble Burning",
-      "pct": 9.19,
-      "local": false
-    },
-    {
-      "source": "Gurgaon",
-      "pct": 6.57,
+      "source": "Rohtak",
+      "pct": 6.1,
       "local": false
     },
     {
       "source": "Delhi Residential",
-      "pct": 5.07,
-      "local": true
-    },
-    {
-      "source": "Delhi & peripheral Industries",
-      "pct": 3.96,
+      "pct": 5.23,
       "local": true
     },
     {
       "source": "Sonipat",
-      "pct": 3.11,
+      "pct": 3.99,
       "local": false
     },
     {
-      "source": "Delhi Construction",
-      "pct": 2.78,
+      "source": "Delhi & peripheral Industries",
+      "pct": 3.9,
       "local": true
     },
     {
-      "source": "Rohtak",
-      "pct": 2.2,
+      "source": "Delhi Construction",
+      "pct": 3.12,
+      "local": true
+    },
+    {
+      "source": "Jind",
+      "pct": 3.1,
       "local": false
     },
     {
-      "source": "Muzaffarnagar",
-      "pct": 2.17,
-      "local": false
-    },
-    {
-      "source": "Ghaziabad",
-      "pct": 2.14,
-      "local": false
-    },
-    {
-      "source": "Bhiwani",
-      "pct": 2.04,
-      "local": false
-    },
-    {
-      "source": "Gautam Buddha Nagar",
-      "pct": 1.84,
+      "source": "Gurgaon",
+      "pct": 2.79,
       "local": false
     },
     {
       "source": "Delhi Waste burning",
-      "pct": 1.79,
+      "pct": 1.91,
       "local": true
-    },
-    {
-      "source": "Panipat",
-      "pct": 1.74,
-      "local": false
-    },
-    {
-      "source": "Delhi Energy",
-      "pct": 1.68,
-      "local": true
-    },
-    {
-      "source": "Bagpat",
-      "pct": 1.66,
-      "local": false
     },
     {
       "source": "Delhi Road Dust",
-      "pct": 1.49,
+      "pct": 1.64,
       "local": true
     },
     {
       "source": "Delhi Other Sectors",
-      "pct": 1.37,
+      "pct": 1.44,
       "local": true
     },
     {
-      "source": "Faridabad",
-      "pct": 1.26,
+      "source": "Delhi Energy",
+      "pct": 1.44,
+      "local": true
+    },
+    {
+      "source": "Bhiwani",
+      "pct": 1.18,
       "local": false
     },
     {
-      "source": "Meerut",
-      "pct": 1.16,
+      "source": "Stubble Burning",
+      "pct": 0.78,
       "local": false
     },
     {
-      "source": "Mahendergarh",
-      "pct": 0.96,
+      "source": "Panipat",
+      "pct": 0.24,
       "local": false
     },
     {
-      "source": "Bulandshahr",
-      "pct": 0.82,
-      "local": false
-    },
-    {
-      "source": "Rewari",
-      "pct": 0.71,
+      "source": "Bagpat",
+      "pct": 0.22,
       "local": false
     },
     {
       "source": "Karnal",
-      "pct": 0.53,
+      "pct": 0.08,
       "local": false
     },
     {
-      "source": "Jind",
-      "pct": 0.39,
+      "source": "Ghaziabad",
+      "pct": 0.06,
+      "local": false
+    },
+    {
+      "source": "Rewari",
+      "pct": 0.01,
+      "local": false
+    },
+    {
+      "source": "Faridabad",
+      "pct": 0.01,
+      "local": false
+    },
+    {
+      "source": "Gautam Buddha Nagar",
+      "pct": 0.01,
+      "local": false
+    },
+    {
+      "source": "Muzaffarnagar",
+      "pct": 0.0,
       "local": false
     },
     {
       "source": "Alwar",
-      "pct": 0.29,
+      "pct": 0.0,
       "local": false
     },
     {
-      "source": "Bharatpur",
-      "pct": 0.14,
+      "source": "Mahendergarh",
+      "pct": 0.0,
       "local": false
     }
   ],
   "summary": {
-    "local_pct": 38.31,
-    "nonlocal_pct": 61.7,
-    "dominant_source": "Delhi Transport",
-    "dominant_pct": 20.17,
-    "n_sources": 29,
-    "sum_pct": 100.01
+    "local_pct": 40.14,
+    "nonlocal_pct": 60.82,
+    "dominant_source": "Others",
+    "dominant_pct": 32.02,
+    "n_sources": 26,
+    "sum_pct": 100.96
   }
 }
