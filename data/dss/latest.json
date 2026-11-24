@@ -1,72 +1,77 @@
 {
-  "scraped_at_utc": "2026-11-23T20:18:48Z",
+  "scraped_at_utc": "2026-11-24T19:33:05Z",
   "source_url": "https://ews.tropmet.res.in/index.php",
-  "sa_date": "2026-11-23",
-  "date_label": "Mon, 23 Nov",
+  "sa_date": "2026-11-24",
+  "date_label": "Tue, 24 Nov",
   "sources": [
     {
       "source": "Others",
-      "pct": 32.02,
+      "pct": 33.97,
       "local": false
     },
     {
       "source": "Delhi Transport",
-      "pct": 21.46,
+      "pct": 20.53,
       "local": true
     },
     {
       "source": "Jhajjar",
-      "pct": 10.23,
+      "pct": 9.54,
       "local": false
     },
     {
       "source": "Rohtak",
-      "pct": 6.1,
+      "pct": 5.68,
       "local": false
     },
     {
       "source": "Delhi Residential",
-      "pct": 5.23,
+      "pct": 5.03,
       "local": true
     },
     {
-      "source": "Sonipat",
-      "pct": 3.99,
-      "local": false
-    },
-    {
       "source": "Delhi & peripheral Industries",
-      "pct": 3.9,
+      "pct": 3.82,
       "local": true
     },
     {
       "source": "Delhi Construction",
-      "pct": 3.12,
+      "pct": 2.99,
       "local": true
     },
     {
-      "source": "Jind",
-      "pct": 3.1,
+      "source": "Bhiwani",
+      "pct": 2.96,
+      "local": false
+    },
+    {
+      "source": "Sonipat",
+      "pct": 2.62,
       "local": false
     },
     {
       "source": "Gurgaon",
-      "pct": 2.79,
+      "pct": 2.38,
+      "local": false
+    },
+    {
+      "source": "Stubble Burning",
+      "pct": 2.25,
       "local": false
     },
     {
       "source": "Delhi Waste burning",
-      "pct": 1.91,
+      "pct": 1.85,
       "local": true
+    },
+    {
+      "source": "Jind",
+      "pct": 1.65,
+      "local": false
     },
     {
       "source": "Delhi Road Dust",
-      "pct": 1.64,
-      "local": true
-    },
-    {
-      "source": "Delhi Other Sectors",
-      "pct": 1.44,
+      "pct": 1.58,
       "local": true
     },
     {
@@ -75,19 +80,9 @@
       "local": true
     },
     {
-      "source": "Bhiwani",
-      "pct": 1.18,
-      "local": false
-    },
-    {
-      "source": "Stubble Burning",
-      "pct": 0.78,
-      "local": false
-    },
-    {
-      "source": "Panipat",
-      "pct": 0.24,
-      "local": false
+      "source": "Delhi Other Sectors",
+      "pct": 1.38,
+      "local": true
     },
     {
       "source": "Bagpat",
@@ -95,18 +90,13 @@
       "local": false
     },
     {
-      "source": "Karnal",
-      "pct": 0.08,
-      "local": false
-    },
-    {
       "source": "Ghaziabad",
-      "pct": 0.06,
+      "pct": 0.07,
       "local": false
     },
     {
-      "source": "Rewari",
-      "pct": 0.01,
+      "source": "Panipat",
+      "pct": 0.03,
       "local": false
     },
     {
@@ -115,32 +105,32 @@
       "local": false
     },
     {
-      "source": "Gautam Buddha Nagar",
+      "source": "Mahendergarh",
       "pct": 0.01,
       "local": false
     },
     {
-      "source": "Muzaffarnagar",
+      "source": "Karnal",
       "pct": 0.0,
       "local": false
     },
     {
-      "source": "Alwar",
+      "source": "Gautam Buddha Nagar",
       "pct": 0.0,
       "local": false
     },
     {
-      "source": "Mahendergarh",
+      "source": "Rewari",
       "pct": 0.0,
       "local": false
     }
   ],
   "summary": {
-    "local_pct": 40.14,
-    "nonlocal_pct": 60.82,
+    "local_pct": 38.62,
+    "nonlocal_pct": 61.39,
     "dominant_source": "Others",
-    "dominant_pct": 32.02,
-    "n_sources": 26,
-    "sum_pct": 100.96
+    "dominant_pct": 33.97,
+    "n_sources": 24,
+    "sum_pct": 100.01
   }
 }

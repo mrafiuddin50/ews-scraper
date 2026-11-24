@@ -1,0 +1,136 @@
+{
+  "scraped_at_utc": "2026-11-24T19:33:05Z",
+  "source_url": "https://ews.tropmet.res.in/index.php",
+  "sa_date": "2026-11-24",
+  "date_label": "Tue, 24 Nov",
+  "sources": [
+    {
+      "source": "Others",
+      "pct": 33.97,
+      "local": false
+    },
+    {
+      "source": "Delhi Transport",
+      "pct": 20.53,
+      "local": true
+    },
+    {
+      "source": "Jhajjar",
+      "pct": 9.54,
+      "local": false
+    },
+    {
+      "source": "Rohtak",
+      "pct": 5.68,
+      "local": false
+    },
+    {
+      "source": "Delhi Residential",
+      "pct": 5.03,
+      "local": true
+    },
+    {
+      "source": "Delhi & peripheral Industries",
+      "pct": 3.82,
+      "local": true
+    },
+    {
+      "source": "Delhi Construction",
+      "pct": 2.99,
+      "local": true
+    },
+    {
+      "source": "Bhiwani",
+      "pct": 2.96,
+      "local": false
+    },
+    {
+      "source": "Sonipat",
+      "pct": 2.62,
+      "local": false
+    },
+    {
+      "source": "Gurgaon",
+      "pct": 2.38,
+      "local": false
+    },
+    {
+      "source": "Stubble Burning",
+      "pct": 2.25,
+      "local": false
+    },
+    {
+      "source": "Delhi Waste burning",
+      "pct": 1.85,
+      "local": true
+    },
+    {
+      "source": "Jind",
+      "pct": 1.65,
+      "local": false
+    },
+    {
+      "source": "Delhi Road Dust",
+      "pct": 1.58,
+      "local": true
+    },
+    {
+      "source": "Delhi Energy",
+      "pct": 1.44,
+      "local": true
+    },
+    {
+      "source": "Delhi Other Sectors",
+      "pct": 1.38,
+      "local": true
+    },
+    {
+      "source": "Bagpat",
+      "pct": 0.22,
+      "local": false
+    },
+    {
+      "source": "Ghaziabad",
+      "pct": 0.07,
+      "local": false
+    },
+    {
+      "source": "Panipat",
+      "pct": 0.03,
+      "local": false
+    },
+    {
+      "source": "Faridabad",
+      "pct": 0.01,
+      "local": false
+    },
+    {
+      "source": "Mahendergarh",
+      "pct": 0.01,
+      "local": false
+    },
+    {
+      "source": "Karnal",
+      "pct": 0.0,
+      "local": false
+    },
+    {
+      "source": "Gautam Buddha Nagar",
+      "pct": 0.0,
+      "local": false
+    },
+    {
+      "source": "Rewari",
+      "pct": 0.0,
+      "local": false
+    }
+  ],
+  "summary": {
+    "local_pct": 38.62,
+    "nonlocal_pct": 61.39,
+    "dominant_source": "Others",
+    "dominant_pct": 33.97,
+    "n_sources": 24,
+    "sum_pct": 100.01
+  }
+}
