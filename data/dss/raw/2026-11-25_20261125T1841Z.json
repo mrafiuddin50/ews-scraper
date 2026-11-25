@@ -1,0 +1,156 @@
+{
+  "scraped_at_utc": "2026-11-25T18:41:26Z",
+  "source_url": "https://ews.tropmet.res.in/index.php",
+  "sa_date": "2026-11-25",
+  "date_label": "Wed, 25 Nov",
+  "sources": [
+    {
+      "source": "Others",
+      "pct": 28.15,
+      "local": false
+    },
+    {
+      "source": "Delhi Transport",
+      "pct": 22.64,
+      "local": true
+    },
+    {
+      "source": "Jhajjar",
+      "pct": 10.11,
+      "local": false
+    },
+    {
+      "source": "Rohtak",
+      "pct": 5.71,
+      "local": false
+    },
+    {
+      "source": "Delhi Residential",
+      "pct": 5.62,
+      "local": true
+    },
+    {
+      "source": "Delhi & peripheral Industries",
+      "pct": 4.4,
+      "local": true
+    },
+    {
+      "source": "Delhi Construction",
+      "pct": 3.32,
+      "local": true
+    },
+    {
+      "source": "Sonipat",
+      "pct": 3.11,
+      "local": false
+    },
+    {
+      "source": "Gurgaon",
+      "pct": 2.89,
+      "local": false
+    },
+    {
+      "source": "Bhiwani",
+      "pct": 2.51,
+      "local": false
+    },
+    {
+      "source": "Delhi Waste burning",
+      "pct": 2.07,
+      "local": true
+    },
+    {
+      "source": "Jind",
+      "pct": 1.94,
+      "local": false
+    },
+    {
+      "source": "Delhi Road Dust",
+      "pct": 1.73,
+      "local": true
+    },
+    {
+      "source": "Delhi Energy",
+      "pct": 1.7,
+      "local": true
+    },
+    {
+      "source": "Stubble Burning",
+      "pct": 1.69,
+      "local": false
+    },
+    {
+      "source": "Delhi Other Sectors",
+      "pct": 1.53,
+      "local": true
+    },
+    {
+      "source": "Bagpat",
+      "pct": 0.35,
+      "local": false
+    },
+    {
+      "source": "Ghaziabad",
+      "pct": 0.3,
+      "local": false
+    },
+    {
+      "source": "Gautam Buddha Nagar",
+      "pct": 0.08,
+      "local": false
+    },
+    {
+      "source": "Panipat",
+      "pct": 0.06,
+      "local": false
+    },
+    {
+      "source": "Mahendergarh",
+      "pct": 0.03,
+      "local": false
+    },
+    {
+      "source": "Faridabad",
+      "pct": 0.03,
+      "local": false
+    },
+    {
+      "source": "Rewari",
+      "pct": 0.03,
+      "local": false
+    },
+    {
+      "source": "Karnal",
+      "pct": 0.02,
+      "local": false
+    },
+    {
+      "source": "Muzaffarnagar",
+      "pct": 0.0,
+      "local": false
+    },
+    {
+      "source": "Meerut",
+      "pct": 0.0,
+      "local": false
+    },
+    {
+      "source": "Bulandshahr",
+      "pct": 0.0,
+      "local": false
+    },
+    {
+      "source": "Alwar",
+      "pct": 0.0,
+      "local": false
+    }
+  ],
+  "summary": {
+    "local_pct": 43.01,
+    "nonlocal_pct": 57.01,
+    "dominant_source": "Others",
+    "dominant_pct": 28.15,
+    "n_sources": 28,
+    "sum_pct": 100.02
+  }
+}
