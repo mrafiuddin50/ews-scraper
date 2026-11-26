@@ -97,12 +97,23 @@ date,source,pct,sd,total,partial,scraped_at_utc
 2026-11-24,Mix Combustion,2.98,0.77,114.4,False,2026-11-25T18:41:26Z
 2026-11-24,Mineral dust/ash,1.67,1.62,114.4,False,2026-11-25T18:41:26Z
 2026-11-24,Industrial,1.2,0.78,114.4,False,2026-11-25T18:41:26Z
-2026-11-25,Vehicles,22.12,6.73,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,"Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",21.34,9.68,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Secondary Organic,20.15,2.6,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Secondary Inorganic,15.82,1.8,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Waste Burning (Municipal/plastic-rubber containing /e-waste),7.24,3.41,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Firecrackers,4.73,7.32,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Mix Combustion,3.81,0.93,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Industrial,2.88,2.73,104.2,True,2026-11-25T18:41:26Z
-2026-11-25,Mineral dust/ash,1.89,0.52,104.2,True,2026-11-25T18:41:26Z
+2026-11-25,Secondary Organic,37.36,8.42,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Vehicles,15.06,12.53,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Secondary Inorganic,14.69,3.39,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,"Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",13.78,8.89,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Waste Burning (Municipal/plastic-rubber containing /e-waste),6.88,5.66,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Coal Combustion,4.07,1.2,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Road Dust/Soil/Mineral,3.59,3.71,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Firecrackers,2.76,5.25,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Industrial,1.28,1.2,100.1,False,2026-11-26T18:28:25Z
+2026-11-25,Mix Combustion,0.54,1.36,100.1,False,2026-11-26T18:28:25Z
+2026-11-26,Secondary Organic,24.83,3.25,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Vehicles,20.63,14.36,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,"Biomass burning (Stubble burning, Domestic solid biofuel/dunk-cake/wood)",19.74,13.18,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Secondary Inorganic,12.52,0.71,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Waste Burning (Municipal/plastic-rubber containing /e-waste),11.44,8.23,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Road Dust/Soil/Mineral,4.49,2.96,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Industrial,2.71,1.95,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Coal Combustion,1.6,0.84,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Firecrackers,1.42,1.48,144.3,True,2026-11-26T18:28:25Z
+2026-11-26,Mix Combustion,0.62,0.52,144.3,True,2026-11-26T18:28:25Z
